@@ -25,7 +25,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [query, setQuery] = useState("troy");
-  const [selectedId, setSelectedId] = useState("tt3498820");
+  const [selectedId, setSelectedId] = useState(null);
 
   const handleSelectMovie = (movieId) => {
     setSelectedId((prev) => (prev === movieId ? null : movieId));
@@ -90,6 +90,7 @@ export default function App() {
             <SelectedMovie
               selectedId={selectedId}
               onCloseMovie={handleCloseMovie}
+              API_KEY={API_KEY}
             />
           ) : (
             <>
