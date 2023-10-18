@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import MoviesBox from "./MoviesBox";
 import WatchedBox from "./WatchedBox";
 
-const Main = () => {
+const Main = ({ movies }) => {
   return (
     <main className="main">
-      <MoviesBox />
+      <MoviesBox movies={movies} />
       <WatchedBox />
     </main>
   );
