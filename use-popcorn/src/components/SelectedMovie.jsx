@@ -16,6 +16,7 @@ const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY, onAddWatched }) => {
     Actors: actors,
     Director: director,
     Genre: genre,
+    imdbId: id,
   } = movie;
 
   const handleAdd = () => {
@@ -42,6 +43,7 @@ const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY, onAddWatched }) => {
     actors,
     director,
     genre,
+    id,
   });
   useEffect(() => {
     const getMovieDetails = async () => {
