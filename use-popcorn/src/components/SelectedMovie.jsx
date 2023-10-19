@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loading from "./Loading";
 
-const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY }) => {
+const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY, onAddWatched }) => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -17,6 +17,19 @@ const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY }) => {
     Director: director,
     Genre: genre,
   } = movie;
+
+  const handleAdd = () => {
+    const newWatchedMovie = {
+      imdbId: selectedId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+    };
+    onAddWatched(newWatchedMovie);
+    onCloseMovie();
+  };
 
   console.table({
     title,
@@ -37,12 +50,12 @@ const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY }) => {
         `http://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedId}`
       );
       const data = await res.json();
-      // console.log(data);
+
       setMovie(data);
       setIsLoading(false);
     };
     getMovieDetails();
-  }, []);
+  }, [selectedId]);
 
   return (
     <div className="details">
@@ -69,6 +82,9 @@ const SelectedMovie = ({ selectedId, onCloseMovie, API_KEY }) => {
           </header>
           <section>
             <div className="rating">STAR HERE</div>
+            <button className="btn-add" onClick={handleAdd}>
+              + Add to List
+            </button>
             <p>
               <em>{plot}</em>
             </p>
