@@ -46,13 +46,25 @@ export default function App() {
   };
 
   useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        handleCloseMovie();
+        console.log("closing");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
     const fetchMoviesData = async () => {
       try {
         setErrorMsg("");
 
         setIsLoading(true);
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         if (!response.ok)
@@ -77,6 +89,8 @@ export default function App() {
       return;
     }
     fetchMoviesData();
+
+    return () => controller.abort();
   }, [query]);
 
   return (
